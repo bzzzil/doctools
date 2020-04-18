@@ -10,6 +10,7 @@ if [ -z "$1" ]
 fi
 
 TMPDIR=$(mktemp -d -t ci-XXXXXXXXXX)
+FILENAME=$(basename $1)
 
 unzip $1 -d $TMPDIR > /dev/null
 
@@ -19,8 +20,8 @@ find $TMPDIR -type f -name "*.xml" -o -type f -name "*.rels" | while read filena
 done
 
 pushd $TMPDIR > /dev/null
-zip $1 -r . > /dev/null
+zip $FILENAME -r . > /dev/null
 popd > /dev/null
 
-mv $TMPDIR/$1 .  > /dev/null
+mv $TMPDIR/$FILENAME $1  > /dev/null
 rm -rf $TMPDIR
